@@ -26,9 +26,18 @@ let persons = [
     }
 ]
 
-// Home
+// Home page
 app.get('/', (request, response) => {
     response.send('<h1>Phonebook</>')
+})
+
+// Info page
+app.get('/info', (request, response) => {
+    const numPersons = persons.length
+    const requestTime = new Date()
+    response.send(`<p>Phonebook has info for ${numPersons} people</p> 
+                   </br> 
+                   <p>${requestTime}</p>`)
 })
 
 // All persons
