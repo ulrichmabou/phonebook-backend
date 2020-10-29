@@ -1,3 +1,4 @@
+const { response } = require('express')
 const express = require('express')
 const app = express()
 
@@ -35,6 +36,7 @@ app.get('/', (request, response) => {
 app.get('/info', (request, response) => {
     const numPersons = persons.length
     const requestTime = new Date()
+
     response.send(`<p>Phonebook has info for ${numPersons} people</p> 
                    </br> 
                    <p>${requestTime}</p>`)
@@ -43,6 +45,18 @@ app.get('/info', (request, response) => {
 // All persons
 app.get('/api/persons', (request, response) => {
     response.json(persons)
+})
+
+// Fetch single phonebook entry
+app.get('/api/persons/:id', (request, response) => {
+    const id = Number(request.params.id)
+    const person = persons.find(p => p.id === id)
+
+    if (person) {
+        response.json(person)
+    } else {
+        response.status(404).end()
+    }
 })
 
 const PORT = 3001
