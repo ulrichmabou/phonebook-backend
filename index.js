@@ -3,7 +3,9 @@ const express = require('express')
 const morgan = require('morgan')
 
 const app = express()
-const logger = morgan('tiny')
+
+morgan.token('body', (req, res) => JSON.stringify(req.body));
+const logger = morgan(':method :url :status :response-time ms :res[content-length] :body :req[content-length]')
 
 app.use(express.json())
 app.use(logger)
